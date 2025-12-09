@@ -62,10 +62,10 @@ class LLMSettings(OpenAIModel):
 class PineconeSettings(BaseModel):
     dimension: int = Field(default=1536, description="Размерность эмбеддинга")
     index_name: str = Field(
-        default="ganiken-names", description="Название индекса в Pinecone"
+        default="dega-names", description="Название индекса в Pinecone"
     )
     index_host: str = Field(
-        default="https://ganiken-names-rkhbx77.svc.apu-57e2-42f6.pinecone.io",
+        default="https://dega-names-rkhbx77.svc.apu-57e2-42f6.pinecone.io",
         description="Хост индекса в Pinecone",
     )
     namespace: str = Field(
