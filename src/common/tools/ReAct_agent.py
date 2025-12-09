@@ -63,19 +63,6 @@ def find_product_in_vector_store(product_name: str) -> Any:
     return db_search_result
 
 
-@tool  # type: ignore
-def find_all_pharmacies_by_product(product_name: str) -> str | List[str]:
-    """Find all pharmacies by product name. Return str or List[str]"""
-    pharmacies = get_all_pharmacies_by_product_name(product_name)
-    return [pharmacy.address for pharmacy in pharmacies]
-
-
-@tool  # type: ignore
-def find_pharmacies_phone_by_address(address: str) -> str:
-    """Find pharmacy phone by address. Return str"""
-    pharmacy_phone = get_pharmacy_phone_by_address(address)
-    return pharmacy_phone
-
 
 @tool  # type: ignore
 def get_current_price_for_product(product_name: str, address: str) -> Any:
@@ -87,7 +74,6 @@ def get_current_price_for_product(product_name: str, address: str) -> Any:
 @tool(parse_docstring=True, args_schema=Order)  # type: ignore
 def create_order(
     pharmacy_address: str,
-    pharmacy_phone: str,
     delivery_address: str,
     client_name: str,
     client_number: str,
@@ -97,7 +83,7 @@ def create_order(
     """
     Создать заказ по шаблону.
     В аргументе должны быть данные о заказе:
-     Адрес Аптеки,
+     Бренд,
      Адрес доставки,
      Имя клиента,
      Номер клиента,
@@ -109,8 +95,7 @@ def create_order(
 
     template = (
         f"Ваш Заказ: "
-        f"Адрес Аптеки: {pharmacy_address}\n"
-        f"Номер WhatsApp Аптеки: {get_pharmacy_phone_by_address(pharmacy_address)}\n"
+        f"Бренд: {pharmacy_address}\n"
         f"Адрес доставки: {pharmacy_address if total < 15000 else delivery_address}\n"
         f"Имя клиента: {client_name}\n"
         f"Номер клиента: {client_number}\n"
@@ -125,10 +110,8 @@ def create_order(
 tools: List[BaseTool] = [
     add,
     find_product_in_vector_store,
-    find_all_pharmacies_by_product,
     get_current_price_for_product,
     check_phone_number,
-    find_pharmacies_phone_by_address,
     create_order,
 ]
 tool_node = ToolNode(tools)
