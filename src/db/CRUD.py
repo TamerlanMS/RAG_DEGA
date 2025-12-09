@@ -94,7 +94,7 @@ def __get_pharmacy_products_from_json(
 
 def update_db(
     db: Annotated[Session, Depends(get_db)],
-    json_url: str = "https://salamat.cloud1c.pro/FileGPT/SalamatProducts.json",
+    json_url: str = "",
     json_data: Optional[Dict[Any, Any]] = None,
 ) -> int:
     """
