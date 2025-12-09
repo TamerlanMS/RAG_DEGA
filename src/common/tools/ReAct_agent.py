@@ -62,7 +62,11 @@ def find_product_in_vector_store(product_name: str) -> Any:
         return vector_store.search(product_name)
     return db_search_result
 
-
+@tool  # type: ignore
+def find_all_pharmacies_by_product(product_name: str) -> str | List[str]:
+    """Find all pharmacies by product name. Return str or List[str]"""
+    pharmacies = get_all_pharmacies_by_product_name(product_name)
+    return [pharmacy.address for pharmacy in pharmacies]
 
 @tool  # type: ignore
 def get_current_price_for_product(product_name: str, address: str) -> Any:
